@@ -1,6 +1,9 @@
 // importa o express para servidores na web
 const express = require('express');
 
+// importa as rotas de cada tabela do banco de dados
+const rotasLivros = require('./routes/bookRoutes');
+
 // cria a aplicação na web
 const app = express();
 
@@ -14,6 +17,9 @@ const porta = 3000;
 app.get('/', (req, res) => {
     res.send('Servidor da web da Papyro no ar!');
 });
+
+// liga as rotas de cada tabela ao seu endereço na web
+app.use('/livros', rotasLivros);
 
 // escuta as requisições feita ao sevidor da web
 app.listen(porta, () => {
