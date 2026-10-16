@@ -2,7 +2,7 @@
 const express = require('express');
 
 // importa o controller de livros
-const bookController = require('../controller/bookController');
+const controlador = require('../controller/bookController');
 
 // cria o roteador das rotas de livro.
 const rotas = express.Router();

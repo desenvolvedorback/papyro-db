@@ -5,7 +5,7 @@ const conexao = require('../database');
 async function cadastrar (req, res) {
     // recebe os dados enviados pela requisição
     let {isbn, titulo, autor, editora, ano_publicacao, edicao, genero} = req.body;
- }
+ 
 
  // verifica se todos os campos obrigatorios foram preenchidos
  if (!isbn || !titulo || !autor || !editora || !ano_publicacao || !edicao || !genero) {
@@ -34,6 +34,7 @@ async function cadastrar (req, res) {
     console.log(erro.mensagem); //imprime o erro no console
     res.status(500).json({erro: "Não foi possível atender a requisição!"}); //retorna uma mensagem de erro do servidor
  }
+}
 
 // exporta as funções para serem usadas.
 module.exports = { cadastrar };
