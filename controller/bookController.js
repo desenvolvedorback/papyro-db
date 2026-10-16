@@ -15,7 +15,7 @@ async function cadastrar (req, res) {
  try {
 
     // verifica se o livro ja foi cadastrado
-    let [livros] = await conexao.query("SELECT id FROM livros WHERE isbn = ?", [isbn]); //verifica se o livro ja foi cadastrado
+    let [livros] = await conexao.query("SELECT id FROM livro WHERE isbn = ?", [isbn]); //verifica se o livro ja foi cadastrado
 
     if (livros.length > 0) {
         return res.status(409).json({mensagem: "Livro já cadastrado!"}); //retorna uma mensagem de erro se o livro ja foi cadastrado
@@ -23,7 +23,7 @@ async function cadastrar (req, res) {
 
     //executa o SQL para cadastrar o livro
     let [resultado] = await conexao.query(
-        "INSERT INTO livros (isbn, titulo, autor, editora, ano_publicacao, edicao, genero) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        "INSERT INTO livro (isbn, titulo, autor, editora, ano_publicacao, edicao, genero) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [isbn, titulo, autor, editora, ano_publicacao, edicao, genero]
     );
         
@@ -32,6 +32,7 @@ async function cadastrar (req, res) {
 
  } catch (erro) {
     console.log(erro.mensagem); //imprime o erro no console
+    console.log(erro.sqlMessage); //imprime o erro no console
     res.status(500).json({erro: "Não foi possível atender a requisição!"}); //retorna uma mensagem de erro do servidor
  }
 }
