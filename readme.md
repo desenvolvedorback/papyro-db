@@ -89,13 +89,61 @@ npm run dev
 
 | Método | Rota | Descrição |
 | --- | --- | --- |
-| `GET` | `/books` | Lista todos os livros |
-| `GET` | `/books/:id` | Busca um livro pelo ID |
-| `POST` | `/books` | Cadastra um novo livro |
-| `PUT` | `/books/:id` | Atualiza um livro existente |
-| `DELETE` | `/books/:id` | Remove um livro do catálogo |
+| `GET` | `/livros` | Lista todos os livros |
+| `GET` | `/livros/:id` | Busca um livro pelo ID |
+| `POST` | `/livros` | Cadastra um novo livro |
+| `PUT` | `/livros/:id` | Atualiza um livro existente |
+| `DELETE` | `/livros/:id` | Remove um livro do catálogo |
 
 ---
+
+### Como cadastrar um novo livro?
+
+acesse a rota `POST /livros` e envie um objeto JSON com os seguintes campos:
+
+````
+{
+  "isbn": "978879",
+  "titulo": "Dom Quixote",
+  "autor": "Miguel de Cervantes",
+  "editora": "Penguin Classics",
+  "ano_publicacao": 2003,
+  "edicao": "1ª",
+  "genero": "Ficção Clássica"
+}
+````
+
+---
+
+### Como buscar um livro?
+
+acesse a rota `GET /livros/:id` e envie o ID do livro desejado.
+
+---
+
+### Como atualizar um livro?
+
+acesse a rota `PUT /livros/:id` e envie um objeto JSON com os seguintes campos:
+
+````
+{
+  "isbn": "978879",
+  "titulo": "Dom Quixote",
+  "autor": "Miguel de Cervantes",
+  "editora": "Penguin Classics",
+  "ano_publicacao": 2003,
+  "edicao": "1ª",
+  "genero": "Ficção Clássica"
+}
+````
+
+---
+
+### Como remover um livro?
+
+Para remover um livro, basta enviar um pedido de remoção para o servidor da web. Para isso, você pode usar a rota `DELETE /livros/:id` e enviar o ID do livro que deseja remover. Por exemplo, para remover o livro com o ID `1`, você pode fazer uma requisição POST para a rota `DELETE /livros/1`.
+
+--- 
 
 ## 📄 Licença
 
