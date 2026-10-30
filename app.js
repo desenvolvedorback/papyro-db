@@ -3,6 +3,10 @@ const express = require('express');
 
 // importa as rotas de cada tabela do banco de dados
 const rotasLivros = require('./routes/bookRoutes');
+const rotasLeitor = require('./routes/readerRoutes');
+const rotasExemplar = require('./routes/itemRoutes');
+const rotasEmprestimo = require('./routes/loanRoutes');
+
 
 // cria a aplicação na web
 const app = express();
@@ -20,7 +24,9 @@ app.get('/', (req, res) => {
 
 // liga as rotas de cada tabela ao seu endereço na web
 app.use('/livros', rotasLivros);
-
+app.use('/leitores', rotasLeitor);
+app.use('/exemplares', rotasExemplar);
+app.use('/emprestimos', rotasEmprestimo);
 // escuta as requisições feita ao sevidor da web
 app.listen(porta, () => {
     console.log(`Servidor rodando na porta http://localhost:${porta}`);
