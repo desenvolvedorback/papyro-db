@@ -19,7 +19,7 @@ async function cadastrar (req, res) {
 
     try {
         // verifica se o leitor ja foi cadastrado
-        let [leitores] = await conexao.query("SELECT id FROM leitor WHERE matricula = ?", [matricula]); //verifica se o leitor ja foi cadastrado
+        let [leitores] = await conexao.query("SELECT id FROM leitor WHERE cpf = ?", [cpf]); //verifica se o leitor ja foi cadastrado
         if (leitores.length > 0) {
             return res.status(409).json({mensagem: "Leitor já cadastrado!"}); //retorna uma mensagem de erro se o leitor ja foi cadastrado
         }
