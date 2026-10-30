@@ -89,11 +89,9 @@ npm run dev
 
 | Método | Rota | Descrição |
 | --- | --- | --- |
-| `GET` | `/livros` | Lista todos os livros |
-| `GET` | `/livros/:id` | Busca um livro pelo ID |
-| `POST` | `/livros` | Cadastra um novo livro |
-| `PUT` | `/livros/:id` | Atualiza um livro existente |
-| `DELETE` | `/livros/:id` | Remove um livro do catálogo |
+| `GET` | `/livros` | Acidiona todos os livros |
+| `GET` | `/leitores` | Acidiona todos os leitores |
+
 
 ---
 
@@ -115,35 +113,9 @@ acesse a rota `POST /livros` e envie um objeto JSON com os seguintes campos:
 
 ---
 
-### Como buscar um livro?
+### Como Acidionar um leitor?
 
-acesse a rota `GET /livros/:id` e envie o ID do livro desejado.
 
----
-
-### Como atualizar um livro?
-
-acesse a rota `PUT /livros/:id` e envie um objeto JSON com os seguintes campos:
-
-````
-{
-  "isbn": "978879",
-  "titulo": "Dom Quixote",
-  "autor": "Miguel de Cervantes",
-  "editora": "Penguin Classics",
-  "ano_publicacao": 2003,
-  "edicao": "1ª",
-  "genero": "Ficção Clássica"
-}
-````
-
----
-
-### Como remover um livro?
-
-Para remover um livro, basta enviar um pedido de remoção para o servidor da web. Para isso, você pode usar a rota `DELETE /livros/:id` e enviar o ID do livro que deseja remover. Por exemplo, para remover o livro com o ID `1`, você pode fazer uma requisição POST para a rota `DELETE /livros/1`.
-
---- 
 
 ## 📄 Licença
 

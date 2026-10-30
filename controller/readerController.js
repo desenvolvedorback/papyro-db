@@ -8,8 +8,13 @@ async function cadastrar (req, res) {
     let {matricula, cpf, nome, tipo, turma, telefone, email} = req.body;
  
     // verifica se todos os campos obrigatorios foram preenchidos
-    if (!matricula || !cpf || !nome || !tipo || !turma || !telefone || !email) {
+    if (!matricula || !cpf || !nome || !tipo || !telefone || !email) {
         return res.status(400).json({erro: "Campos obrigatórios não preenchidos!"}); //retorna uma mensagem de erro se algum campo obrigatório não for preenchido
+    }
+
+    // verifica se o tipo de cadastro é igual ao banco de dados
+    if (tipo !== "aluno" && tipo !== "professor") {
+        return res.status(400).json({erro: "Tipo de cadastro incorreto (Aluno ou Professor)"}); //retorna uma mensagem de erro se o tipo de cadastro for inválido
     }
 
     try {
