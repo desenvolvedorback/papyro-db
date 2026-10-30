@@ -21,13 +21,13 @@ async function cadastrar (req, res) {
         // verifica se o leitor ja foi cadastrado
         let [leitores] = await conexao.query("SELECT id FROM leitor WHERE cpf = ?", [cpf]); //verifica se o leitor ja foi cadastrado
         if (leitores.length > 0) {
-            return res.status(409).json({mensagem: "Leitor já cadastrado!"}); //retorna uma mensagem de erro se o leitor ja foi cadastrado
+            return res.status(409).json({erro: "Cpf já cadastrado!"}); //retorna uma mensagem de erro se o leitor ja foi cadastrado
         }
 
         //executa o SQL para cadastrar o leitor
         let [resultado] = await conexao.query(
             "INSERT INTO leitor (matricula, cpf, nome, tipo, turma, telefone, email) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [matricula, cpf, nome, tipo, turma, telefone, email]
+            [matricula, cpf, nome, tipo, turma || null, telefone, email]
         );
             
         // retorna o resultado pro usuario
