@@ -54,12 +54,18 @@ if (data_prevista_devolucao <= data_emprestimo){
         return res.status(409).json({mensagem: "Exemplar Não está disponível para empréstimo...."}); //retorna uma mensagem de erro se o livro ja foi emprestado
     }
 
-    //executa o SQL para cadastrar o emprestimo
+    //executa o SQL para emprestar  o exemplar do livro
     let [resultado] = await conexao.query(
         "INSERT INTO emprestimo (id_leitor, id_exemplar, data_emprestimo, data_prevista_devolucao) VALUES (?, ?, ?, ?)",
         [id_leitor, id_exemplar, data_emprestimo, data_prevista_devolucao]
     );
-        
+
+    // atualiza a situação do exemplar para "Emprestado"
+    await conexao.query(
+        "UPDATE exemplar SET situacao = 'Emprestado' WHERE id = ?",
+        [id_exemplar]
+    );
+    
     // retorna o resultado pro usuario
     res.status(201).json({mensagem: "Empréstimo feito com sucesso!"});
 
