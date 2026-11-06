@@ -80,7 +80,19 @@ if (data_prevista_devolucao <= data_emprestimo){
 async function listar(req, res) {
     try {
         // Busca todos os empréstimos ordenados pela data mais recente
-        const [emprestimos] = await conexao.query("SELECT * FROM emprestimo ORDER BY data_emprestimo DESC");
+        const [emprestimos] = await conexao.query(
+            `SELECT EM.id,
+            EM.id_leitor, LE.nome AS leitor,
+            EM.id_exemplar, EX.codigo AS codigo_exemplar, LI.titulo AS livro,
+            DATE_FORMAT(EM.data_emprestimo, '%Y-%m-%d') AS data_emprestimo,
+            DATE_FORMAT(EM.data_prevista_devolucao, '%Y-%m-%d') AS data_prevista_devolucao,
+            DATE_FORMAT(EM.data_devolucao, '%Y-%m-%d') AS data_devolucao
+            FROM emprestimo EM
+            JOIN leitor LE ON LE.id = EM.id_leitor
+            JOIN exemplar EX ON EX.id = EM.id_exemplar
+            JOIN livro LI ON LI.id = EX.id_livro
+            ORDER BY EM.id`
+        );
         res.status(200).json(emprestimos);
 
     } catch (erro) {
@@ -96,7 +108,19 @@ async function buscar(req, res) {
     const { id } = req.params;
 
     try {
-        const [emprestimos] = await conexao.query("SELECT * FROM emprestimo WHERE id = ?", [id]);
+        const [emprestimos] = await conexao.query(
+            `SELECT EM.id,
+         EM.id_leitor, LE.nome AS leitor,
+         EM.id_exemplar, EX.codigo AS codigo_exemplar, LI.titulo AS livro,
+         DATE_FORMAT(EM.data_emprestimo, '%Y-%m-%d') AS data_emprestimo,
+         DATE_FORMAT(EM.data_prevista_devolucao, '%Y-%m-%d') AS data_prevista_devolucao,
+         DATE_FORMAT(EM.data_devolucao, '%Y-%m-%d') AS data_devolucao
+       FROM emprestimo EM
+       JOIN leitor LE ON LE.id = EM.id_leitor
+       JOIN exemplar EX ON EX.id = EM.id_exemplar
+       JOIN livro LI ON LI.id = EX.id_livro
+       WHERE EM.id = ?`, [id]
+        );
 
         // Verifica se encontrou algum registro
         if (emprestimos.length === 0) {
