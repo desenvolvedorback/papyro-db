@@ -37,5 +37,39 @@ async function cadastrar (req, res) {
  }
 }
 
+// cria uma função para listar todos os livros
+async function listar(req, res) {
+
+    try {
+        // execulta o SQL para buscar todos os livros.
+        const [livros] = await conexao.query("SELECT * FROM livro ORDER BY titulo");
+        res.status(200).json(livros);
+
+    } catch (erro) {
+    console.log(erro.mensagem); //imprime o erro no console
+    console.log(erro.sqlMessage); //imprime o erro no console
+    res.status(500).json({erro: "Não foi possível atender a requisição!"}); //retorna uma mensagem de erro do servidor
+}
+}
+
+// cria uma função para buscar dados de apenas um livro.
+async function buscar(req, res) {
+
+    try {
+        // execula o SQL para buscar apenas um livro.
+        const [livros] = await conexao.query("SELECT * FROM livro WHERE id = ?", [id]);
+
+        // verifica se o livro foi encontrado.
+        if(livros.length === 0) {
+            return res.status(404).json({erro: "Livro não encontrado..."})
+        }
+        res.status(200).json(livros[0]);
+
+    } catch (erro) {
+    console.log(erro.mensagem); //imprime o erro no console
+    console.log(erro.sqlMessage); //imprime o erro no console
+    res.status(500).json({erro: "Não foi possível atender a requisição!"}); //retorna uma mensagem de erro do servidor
+}
+}
 // exporta as funções para serem usadas.
-module.exports = { cadastrar };
+module.exports = { cadastrar, listar, buscar };

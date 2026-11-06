@@ -1,0 +1,2 @@
+fazer a função listar[tudo] (select * from)
+e a função de buscar - feito dos 'livro, leitores, exemplares' -falta emprestimo
