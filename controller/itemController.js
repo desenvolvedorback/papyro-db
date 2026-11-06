@@ -49,7 +49,12 @@ async function listar(req, res) {
 
     try {
         // execula o SQL para buscar todos os exemplares.
-        const [exemplares] = await conexao.query("SELECT * FROM exemplar ORDER BY codigo");
+        const [exemplares] = await conexao.query(
+            `SELECT E.id, E.codigo, E.situacao, E.id_livro, L.titulo
+	        FROM exemplar E
+            JOIN livro L ON L.id = E.id_livro
+            ORDER BY E.codigo`
+            );
         res.status(200).json(exemplares);
 
     } catch (erro) {
@@ -64,11 +69,16 @@ async function buscar(req, res) {
 
     try {
         // execula o SQL para buscar apenas um exemplar.
-        const [exemplares] = await conexao.query("SELECT * FROM exemplar WHERE id = ?", [id]);
+        const [exemplares] = await conexao.query(
+            `SELECT E.id, E.codigo, E.situacao, E.id_livro, L.titulo
+            FROM exemplar E
+            JOIN livro L ON L.id = E.id_livro
+            WHERE E.id = ?`, [id]
+        );
 
         // verifica se o livro foi encontrado.
         if(exemplares.length === 0) {
-            return res.status(404).json({erro: "Livro não encontrado..."})
+            return res.status(404).json({erro: "Exemplar de Livro não encontrado..."})
         }
         res.status(200).json(exemplares[0]);
 
