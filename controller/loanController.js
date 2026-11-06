@@ -76,5 +76,42 @@ if (data_prevista_devolucao <= data_emprestimo){
  }
 }
 
+// Função para listar todos os empréstimos
+async function listar(req, res) {
+    try {
+        // Busca todos os empréstimos ordenados pela data mais recente
+        const [emprestimos] = await conexao.query("SELECT * FROM emprestimo ORDER BY data_emprestimo DESC");
+        res.status(200).json(emprestimos);
+
+    } catch (erro) {
+        console.log(erro.message);
+        console.log(erro.sqlMessage);
+        res.status(500).json({ erro: "Não foi possível atender a requisição!" });
+    }
+}
+
+// Função para buscar um empréstimo específico pelo ID
+async function buscar(req, res) {
+    // Captura o 'id' enviado nos parâmetros da rota (ex: /emprestimos/1)
+    const { id } = req.params;
+
+    try {
+        const [emprestimos] = await conexao.query("SELECT * FROM emprestimo WHERE id = ?", [id]);
+
+        // Verifica se encontrou algum registro
+        if (emprestimos.length === 0) {
+            return res.status(404).json({ erro: "Empréstimo não encontrado..." });
+        }
+
+        // Retorna o empréstimo encontrado
+        res.status(200).json(emprestimos[0]);
+
+    } catch (erro) {
+        console.log(erro.message);
+        console.log(erro.sqlMessage);
+        res.status(500).json({ erro: "Não foi possível atender a requisição!" });
+    }
+}
+
 // exporta as funções para serem usadas.
-module.exports = { cadastrar };
+module.exports = { cadastrar, listar, buscar };
