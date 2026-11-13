@@ -1,6 +1,5 @@
 // importa o conexão com o banco de dados
 const conexao = require('../database');
-const { buscar } = require('./bookController');
 
 // cria uma função que cadastra um novo exemplar
 async function cadastrar (req, res) {
@@ -73,7 +72,7 @@ async function buscar(req, res) {
             `SELECT E.id, E.codigo, E.situacao, E.id_livro, L.titulo
             FROM exemplar E
             JOIN livro L ON L.id = E.id_livro
-            WHERE E.id = ?`, [id]
+            WHERE E.id = ?`, [req.params.id]
         );
 
         // verifica se o livro foi encontrado.

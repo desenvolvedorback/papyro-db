@@ -10,9 +10,9 @@ const rotas = express.Router();
 //chama a rota para cadastrar um novo exemplar
 rotas.post('/', controlador.cadastrar);
 // chama rota de listagem
-rotas.post('/listar', controlador.listar);
+rotas.post('/', controlador.listar);
 // chama a rota de buscar
-rotas.post('/buscar', controlador.buscar);
+rotas.post('/:id', controlador.buscar);
 
 // exporta as rotas para serem usadas pelo servidor da web.
 module.exports = rotas;
